@@ -1,0 +1,44 @@
+# F-O-Assignments
+Description:Create a business event when a new customer is created in the system
+"Data contract class"
+
+[DataContract]
+public final class CustomerCreationBusinessEventsContract extends BusinessEventsContract
+{
+    private CustAccount         accountNum;
+    private Name                name;
+
+    public static CustomerCreationBusinessEventsContract newFromCustTable(CustTable _custTable)
+    {
+        CustomerCreationBusinessEventsContract contract = new CustomerCreationBusinessEventsContract();
+        contract.initialize(_custTable);
+        return contract;
+    }
+
+    protected void initialize(CustTable _custTable)
+    {
+        name = _custTable.name();
+        accountNum = _custTable.AccountNum;
+    }
+
+    protected void new()
+    {
+    }
+
+    [DataMember("Name"),BusinessEventsDataMember("Name")]
+    public Name parmName(Name _name = name)
+    {
+        name = _name;
+        return name;
+    }
+
+    [DataMember("CustAccount"),BusinessEventsDataMember("Customer account")]
+    public CustAccount parmPartyNumber(CustAccount _accountNum = accountNum)
+    {
+        accountNum = _accountNum;
+        return accountNum;
+    }
+}
+
+
+"Business event class"
